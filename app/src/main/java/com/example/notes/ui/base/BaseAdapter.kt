@@ -39,6 +39,7 @@ abstract class BaseAdapter<T>(
             areItemsSame(oldItem , newItem)
         })
         items = newItems
+        diffResult.dispatchUpdatesTo(this)
     }
 
     open fun areItemsSame(oldItem: T, newItem: T):Boolean {

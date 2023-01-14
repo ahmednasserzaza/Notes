@@ -26,7 +26,8 @@ abstract class NoteDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context): NoteDatabase{
-            return Room.databaseBuilder(context , NoteDatabase::class.java , DATABASE_NAME).build()
+            return Room.databaseBuilder(context , NoteDatabase::class.java , DATABASE_NAME).fallbackToDestructiveMigration().build()
+            // .fallbackToDestructiveMigration() علشان لو غيرت ال version او ضفت عمود او حذفت عمود
         }
     }
 }
