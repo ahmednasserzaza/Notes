@@ -18,7 +18,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:hint="enter your note"
-            android:text="@{viewModel.newNoteText}"
+            android:text="@={viewModel.newNoteText}"
             android:layout_margin="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,13 +34,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_note" />
+        <EditText
+            android:id="@+id/filter_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@={viewModel.searchText}"
+            android:hint="filter notes"
+            app:layout_constraintTop_toBottomOf="@+id/button_add_note"
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_notes"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:items="@{viewModel.notes}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/text_note"
+            app:layout_constraintTop_toBottomOf="@+id/filter_notes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

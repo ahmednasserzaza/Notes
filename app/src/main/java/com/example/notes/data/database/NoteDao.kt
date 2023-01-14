@@ -16,6 +16,9 @@ interface NoteDao {
     @Update
     suspend fun updateNote(note: Note)
 
-    @Query(value = "SELECT * FROM NOTE_TABLE ORDER BY id DESC")
+    @Query("SELECT * FROM NOTE_TABLE ORDER BY id DESC")
     fun getAllNotes(): Flow<List<Note>>
+
+    @Query("SELECT * FROM NOTE_TABLE WHERE content LIKE :searchTerm ORDER BY id DESC")
+    suspend fun getFilteredNotes(searchTerm:String) : List<Note>
 }

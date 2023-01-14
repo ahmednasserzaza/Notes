@@ -13,4 +13,5 @@ class NoteRepository {
 
     fun getAllNotes() = dao.getAllNotes()
 
+    suspend fun getFilteredNotes(searchTerm:String)  = dao.getFilteredNotes("%$searchTerm%")
 }
