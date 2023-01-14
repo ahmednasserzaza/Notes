@@ -1,12 +1,10 @@
 package com.example.notes.ui.notes
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.notes.data.Note
 import com.example.notes.data.repositories.NoteRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class NotesViewModel : ViewModel(), NoteInteractionListener {
 
@@ -14,26 +12,18 @@ class NotesViewModel : ViewModel(), NoteInteractionListener {
 
     val newNoteText = MutableLiveData<String>()
 
-    private val _notes = MutableLiveData<List<Note>>()
-    val notes: LiveData<List<Note>> = _notes
+    val notes: LiveData<List<Note>> = repository.getAllNotes().asLiveData()
 
-    init {
-        loadAllNotes()
-    }
 
     fun addNote() {
         viewModelScope.launch {
             newNoteText.value?.let {
-                repository.insertNewNote(Note(0, it, "14/1/2023", false))
+                repository.insertNewNote(Note(0, it, Date(), false))
+                newNoteText.value = ""
             }
+
         }
     }
 
-    private fun loadAllNotes() {
-        viewModelScope.launch {
-            val allNotes = repository.getAllNotes()
-            _notes.postValue(allNotes)
-        }
 
-    }
 }

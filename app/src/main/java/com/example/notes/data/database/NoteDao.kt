@@ -1,14 +1,13 @@
 package com.example.notes.data.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.notes.data.Note
-import io.reactivex.rxjava3.core.Completable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE) // بمعنى ان لو عندك id نفس ال id هيعملها تجاهل اثناء انشائها ومش هيضيفها
     suspend fun insertNote(note: Note)
 
     @Delete
@@ -18,5 +17,5 @@ interface NoteDao {
     suspend fun updateNote(note: Note)
 
     @Query(value = "SELECT * FROM NOTE_TABLE ORDER BY id DESC")
-    suspend fun getAllNotes(): List<Note>
+    fun getAllNotes(): Flow<List<Note>>
 }

@@ -1,7 +1,6 @@
 package com.example.notes.ui.notes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,10 +20,20 @@ class NotesFragment : Fragment() {
     ): View {
         binding = FragmentNotesBinding.inflate(inflater)
 
-        binding.viewModel = viewModel
+
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = NoteAdapter(mutableListOf(), viewModel)
+        binding.recyclerNotes.adapter = adapter
+
+
     }
 
 }
