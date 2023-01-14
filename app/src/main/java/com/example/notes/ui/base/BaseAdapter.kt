@@ -1,10 +1,10 @@
 package com.example.notes.ui.base
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.BR
 
@@ -34,10 +34,15 @@ abstract class BaseAdapter<T>(
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setItems(newItems: List<T>) {
+        val diffResult = DiffUtil.calculateDiff(SimpleDiffUtil(items , newItems){oldItem, newItem ->
+            areItemsSame(oldItem , newItem)
+        })
         items = newItems
-        notifyDataSetChanged()
+    }
+
+    open fun areItemsSame(oldItem: T, newItem: T):Boolean {
+        return oldItem?.equals(newItem) == true
     }
 
     fun getItems() = items

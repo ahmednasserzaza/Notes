@@ -1,6 +1,7 @@
 package com.example.notes.ui.notes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,12 +20,11 @@ class NotesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNotesBinding.inflate(inflater)
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
         return binding.root
-
     }
-
-
 
 }

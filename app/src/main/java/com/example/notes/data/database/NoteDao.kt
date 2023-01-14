@@ -1,9 +1,9 @@
 package com.example.notes.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.notes.data.Note
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
 
 @Dao
 interface NoteDao {
@@ -17,6 +17,6 @@ interface NoteDao {
     @Update
     fun updateNote(note: Note):Completable
 
-    @Query(value = "SELECT * FROM NOTE_TABLE")
-    fun getAllNotes() : Observable<List<Note>>
+    @Query(value = "SELECT * FROM NOTE_TABLE ORDER BY id DESC")
+    fun getAllNotes() : LiveData<List<Note>>
 }
