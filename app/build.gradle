@@ -59,6 +59,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava3:$room_version"
+    implementation"androidx.room:room-ktx:$room_version"
 
     // other dependency
     implementation"androidx.activity:activity-ktx:1.6.1"

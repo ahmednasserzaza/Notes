@@ -9,10 +9,10 @@ class NoteRepository {
 
     private val dao = NoteDatabase.getRandomInstance().noteDao()
 
-    fun insertNewNote(note:Note):Completable{
+    suspend fun insertNewNote(note: Note) {
         return dao.insertNote(note)
     }
 
-    fun getAllNotes() = dao.getAllNotes()
+    suspend fun getAllNotes() = dao.getAllNotes()
 
 }

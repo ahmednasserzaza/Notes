@@ -3,9 +3,10 @@ package com.example.notes.ui.notes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.notes.data.Note
 import com.example.notes.data.repositories.NoteRepository
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 class NotesViewModel : ViewModel(), NoteInteractionListener {
 
@@ -13,16 +14,26 @@ class NotesViewModel : ViewModel(), NoteInteractionListener {
 
     val newNoteText = MutableLiveData<String>()
 
-    val notes: LiveData<List<Note>> = repository.getAllNotes()
+    private val _notes = MutableLiveData<List<Note>>()
+    val notes: LiveData<List<Note>> = _notes
 
+    init {
+        loadAllNotes()
+    }
 
     fun addNote() {
-        newNoteText.value?.let {
-            repository.insertNewNote(Note(0, it, "14/1/2023", false))
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-            newNoteText.postValue("")
+        viewModelScope.launch {
+            newNoteText.value?.let {
+                repository.insertNewNote(Note(0, it, "14/1/2023", false))
+            }
         }
     }
 
+    private fun loadAllNotes() {
+        viewModelScope.launch {
+            val allNotes = repository.getAllNotes()
+            _notes.postValue(allNotes)
+        }
+
+    }
 }
